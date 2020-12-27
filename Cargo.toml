@@ -5,7 +5,8 @@ authors = ["AB <ab@hexor.ru>"]
 license = "WTFPL"
 edition = "2018"
 description = "Wrapper around Yandex Mystem for Rust."
-homepage = ""
+homepage = "https://github.com/house-of-vanity/mystem-rs"
+repository = "https://github.com/house-of-vanity/mystem-rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
