@@ -8,7 +8,6 @@ use std::str::FromStr;
 use subprocess::{Popen, PopenConfig, PopenError, Redirection};
 #[macro_use]
 extern crate log;
-use std::collections::{HashMap, HashSet};
 
 pub use error::*;
 pub use grammems::*;
@@ -90,6 +89,7 @@ impl MyStem {
     ///     // как is a lexeme of как
     ///     // все is a lexeme of все
     /// ```
+    #[allow(unused_must_use)]
     pub fn stemming(&mut self, text: String) -> Result<Vec<Stemming>, AppError> {
         if let Some(exit_status) = self.process.poll() {
             warn!(
