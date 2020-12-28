@@ -15,6 +15,7 @@ use crate::Tense::{Inpresent, Past, Present};
 use crate::Transitivity::{Intransitive, Transitive};
 use crate::VerbPerson::{First, Second, Third};
 use crate::Voice::{Active, Passive};
+use std::fmt;
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -31,58 +32,63 @@ pub struct Grammem {
 #[derive(Debug, PartialEq)]
 pub enum PartOfSpeech {
     /// прилагательное
-    A,
+    Adjective,
     /// наречие
-    ADV,
+    Adverb,
     /// местоименное наречие
-    ADVPRO,
+    AdverbPronominal,
     /// числительное-прилагательное
-    ANUM,
+    AdjectiveNumeral,
     /// местоимение-прилагательное
-    APRO,
+    AdjectivePronoun,
     /// часть композита - сложного слова
-    COM,
+    Composite,
     /// союз
-    CONJ,
+    Conjunction,
     /// междометие
-    INTJ,
+    Interjection,
     /// числительное
-    NUM,
+    Numeral,
     /// частица
-    PART,
+    Particle,
     /// предлог
-    PR,
+    Preposition,
     /// существительное
-    S,
+    Noun,
     /// местоимение-существительное
-    SPRO,
+    AdjectiveNoun,
     /// глагол
-    V,
+    Verb,
 }
 impl FromStr for PartOfSpeech {
     type Err = crate::AppError;
     fn from_str(input: &str) -> Result<PartOfSpeech, Self::Err> {
         match input {
-            "A" => Ok(PartOfSpeech::A),
-            "ADV" => Ok(PartOfSpeech::ADV),
-            "ADVPRO" => Ok(PartOfSpeech::ADVPRO),
-            "ANUM" => Ok(PartOfSpeech::ANUM),
-            "APRO" => Ok(PartOfSpeech::APRO),
-            "COM" => Ok(PartOfSpeech::COM),
-            "CONJ" => Ok(PartOfSpeech::CONJ),
-            "INTJ" => Ok(PartOfSpeech::INTJ),
-            "NUM" => Ok(PartOfSpeech::NUM),
-            "PART" => Ok(PartOfSpeech::PART),
-            "PR" => Ok(PartOfSpeech::PR),
-            "S" => Ok(PartOfSpeech::S),
-            "SPRO" => Ok(PartOfSpeech::SPRO),
-            "V" => Ok(PartOfSpeech::V),
+            "A" => Ok(PartOfSpeech::Adjective),
+            "ADV" => Ok(PartOfSpeech::Adverb),
+            "ADVPRO" => Ok(PartOfSpeech::AdverbPronominal),
+            "ANUM" => Ok(PartOfSpeech::AdjectiveNumeral),
+            "APRO" => Ok(PartOfSpeech::AdjectivePronoun),
+            "COM" => Ok(PartOfSpeech::Composite),
+            "CONJ" => Ok(PartOfSpeech::Conjunction),
+            "INTJ" => Ok(PartOfSpeech::Interjection),
+            "NUM" => Ok(PartOfSpeech::Numeral),
+            "PART" => Ok(PartOfSpeech::Particle),
+            "PR" => Ok(PartOfSpeech::Preposition),
+            "S" => Ok(PartOfSpeech::Noun),
+            "SPRO" => Ok(PartOfSpeech::AdjectiveNoun),
+            "V" => Ok(PartOfSpeech::Verb),
             _ => Err(AppError::PartOfSpeechError("Failed to get Part of Speech.")),
         }
     }
 }
+impl fmt::Display for PartOfSpeech {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Fact {
     Case(Case),
     Tense(Tense),
@@ -98,8 +104,13 @@ pub enum Fact {
     Transitivity(Transitivity),
     Other(Other),
 }
+impl fmt::Display for Fact {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Case {
     Nominative,    //именительный
     Genitive,      //родительный
@@ -112,20 +123,20 @@ pub enum Case {
     Vocative,      //звательный
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Tense {
     Present,   //настоящее
     Inpresent, //непрошедшее
     Past,      //прошедшее
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Plurality {
     Plural,   //настоящее
     Singular, //непрошедшее
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Mood {
     Gerunds,    //деепричастие
     Infinitive, //инфинитив
@@ -134,58 +145,58 @@ pub enum Mood {
     Imperative, //повелительное наклонение
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Adjective {
     Short,      //Краткое
     Long,       //Полное
     Possessive, //притяжательное
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum ComparativeDegree {
     Superlative, //превосходная
     Comparative, //сравнительная
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum VerbPerson {
     First,  //1-е лицо
     Second, //2-е лицо
     Third,  //3-е лицо
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Gender {
     Masculine, //мужской род
     Feminine,  //женский род
     Neuter,    //средний род
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum PerfectiveAspect {
     Perfective,   //совершенный
     Imperfective, //несовершенный
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Voice {
     Passive, //страдательный залог
     Active,  //действительный залог
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Animacy {
     Animate,   //одушевленное
     Inanimate, //неодушевленное
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Transitivity {
     Transitive,   //переходный глагол
     Intransitive, //непереходный глагол
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Other {
     Parenthesis,  //вводное слово
     Geo,          //географическое название

@@ -12,21 +12,30 @@ extern crate log;
 pub use error::*;
 pub use grammems::*;
 
-/// A Mystem process represented here
+/// A Mystem process representation
 #[derive(Debug)]
 pub struct MyStem {
     pub process: Popen,
 }
 
-/// Stemmed result
+/// Lexeme struct
 #[derive(Debug)]
-pub struct Stemming {
-    /// Original word
-    pub text: String,
+pub struct Lexeme {
     /// Detected lexeme
     pub lex: String,
     /// Detected grammems
     pub grammem: Grammem,
+    /// Wight of Lexeme
+    pub weight: f64,
+}
+
+/// Stemmed result containing `Vec` of [`mystem::Lexeme`](./struct.Lexeme.html)
+#[derive(Debug)]
+pub struct Stemming {
+    /// Original word
+    pub text: String,
+    /// `Vec` of [`mystem::Lexeme`](./struct.Lexeme.html) of `text`.
+    pub lex: Vec<Lexeme>,
 }
 
 impl MyStem {
@@ -41,7 +50,7 @@ impl MyStem {
 
     fn open_process() -> Result<Popen, PopenError> {
         Popen::create(
-            &["mystem", "-d", "-i", "--format", "json", "--eng-gr"],
+            &["mystem", "-i", "--format", "json", "--eng-gr", "--weight"],
             PopenConfig {
                 stdout: Redirection::Pipe,
                 stdin: Redirection::Pipe,
@@ -119,10 +128,20 @@ impl MyStem {
                 for i in v {
                     stemmings.push(Stemming {
                         text: i["text"].to_string().replace("\"", ""),
-                        lex: i["analysis"][0]["lex"].to_string().replace("\"", ""),
-                        grammem: self.detect_grammems(
-                            i["analysis"][0]["gr"].to_string().replace("\"", ""),
-                        )?,
+                        lex: {
+                            i["analysis"]
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .map(|z| Lexeme {
+                                    lex: z["lex"].to_string().replace("\"", ""),
+                                    grammem: self
+                                        .detect_grammems(z["gr"].to_string().replace("\"", ""))
+                                        .unwrap(),
+                                    weight: z["wt"].as_f64().unwrap_or(1.0),
+                                })
+                                .collect()
+                        },
                     });
                 }
                 Ok(stemmings)
