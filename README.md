@@ -6,7 +6,7 @@ Rust wrapper for the Yandex MyStem 3.1 morpholocial analyzer of the Russian lang
 The wrapper was tested on Ubuntu Linux 18.04+, Windows 10. 
 Mystem binary should be accessible via PATH so manual installation is required. [MyStem Web Site](https://yandex.ru/dev/mystem/)
 
-###A Quick Example
+### A Quick Example
 
 ```rust
 let mut instance = mystem::MyStem::new()?;
