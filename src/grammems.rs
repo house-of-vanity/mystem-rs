@@ -13,7 +13,7 @@ use crate::PerfectiveAspect::{Imperfective, Perfective};
 use crate::Plurality::{Plural, Singular};
 use crate::Tense::{Inpresent, Past, Present};
 use crate::Transitivity::{Intransitive, Transitive};
-use crate::VerbPerson::{First, Second, Third};
+use crate::Person::{First, Second, Third};
 use crate::Voice::{Active, Passive};
 use std::fmt;
 use std::str::FromStr;
@@ -29,35 +29,36 @@ pub struct Grammem {
     pub facts_raw: Vec<String>,
 }
 
+/// Часть речи
 #[derive(Debug, PartialEq)]
 pub enum PartOfSpeech {
-    /// прилагательное
+    /// Прилагательное
     Adjective,
-    /// наречие
+    /// Наречие
     Adverb,
-    /// местоименное наречие
+    /// Местоименное наречие
     AdverbPronominal,
-    /// числительное-прилагательное
+    /// Числительное-прилагательное
     AdjectiveNumeral,
-    /// местоимение-прилагательное
+    /// Местоимение-прилагательное
     AdjectivePronoun,
-    /// часть композита - сложного слова
+    /// Часть композита - сложного слова
     Composite,
-    /// союз
+    /// Союз
     Conjunction,
-    /// междометие
+    /// Междометие
     Interjection,
-    /// числительное
+    /// Числительное
     Numeral,
-    /// частица
+    /// Частица
     Particle,
-    /// предлог
+    /// Предлог
     Preposition,
-    /// существительное
+    /// Существительное
     Noun,
-    /// местоимение-существительное
+    /// Местоимение-существительное
     AdjectiveNoun,
-    /// глагол
+    /// Глагол
     Verb,
 }
 impl FromStr for PartOfSpeech {
@@ -90,18 +91,31 @@ impl fmt::Display for PartOfSpeech {
 
 #[derive(Debug, PartialEq)]
 pub enum Fact {
+    /// Падеж
     Case(Case),
+    /// Время глаголов
     Tense(Tense),
+    /// Число
     Plurality(Plurality),
+    /// Наклонение глагола
     Mood(Mood),
+    /// Форма прилагательного
     Adjective(Adjective),
+    /// Степень сравнения
     ComparativeDegree(ComparativeDegree),
-    Person(VerbPerson),
+    /// Лицо глагола
+    Person(Person),
+    /// Род
     Gender(Gender),
+    /// Вид глагола
     PerfectiveAspect(PerfectiveAspect),
+    /// Залог
     Voice(Voice),
+    /// Одушевленность
     Animacy(Animacy),
+    /// Переходность
     Transitivity(Transitivity),
+    /// Прочие обозначения
     Other(Other),
 }
 impl fmt::Display for Fact {
@@ -110,108 +124,173 @@ impl fmt::Display for Fact {
     }
 }
 
+/// Падеж
 #[derive(Debug, PartialEq)]
 pub enum Case {
-    Nominative,    //именительный
-    Genitive,      //родительный
-    Dative,        //дательный
-    Accusative,    //винительный
-    Instrumental,  //творительный
-    Prepositional, //предложный
-    Partitive,     //партитив (второй родительный)
-    Locative,      //местный (второй предложный)
-    Vocative,      //звательный
+    /// Именительный
+    Nominative,
+    /// Родительный
+    Genitive,
+    /// Дательный
+    Dative,
+    /// Винительный
+    Accusative,
+    /// Творительный
+    Instrumental,
+    /// Предложный
+    Prepositional,
+    /// Партитив (второй родительный)
+    Partitive,
+    /// Местный (второй предложный)
+    Locative,
+    /// Звательный
+    Vocative,
 }
 
+/// Время глагола
 #[derive(Debug, PartialEq)]
 pub enum Tense {
-    Present,   //настоящее
-    Inpresent, //непрошедшее
-    Past,      //прошедшее
+    /// Настоящее время
+    Present,
+    /// Непрошедшее время
+    Inpresent,
+    /// Прошедшее время
+    Past,
 }
 
+/// Число
 #[derive(Debug, PartialEq)]
 pub enum Plurality {
-    Plural,   //настоящее
-    Singular, //непрошедшее
+    /// Множественное
+    Plural,
+    /// Единственное
+    Singular,
 }
 
+/// Наклонение глагола
 #[derive(Debug, PartialEq)]
 pub enum Mood {
-    Gerunds,    //деепричастие
-    Infinitive, //инфинитив
-    Participle, //причастие
-    Indicative, //изьявительное наклонение
-    Imperative, //повелительное наклонение
+    /// Деепричастие
+    Gerunds,
+    /// Инфинитив
+    Infinitive,
+    /// Причастие
+    Participle,
+    /// Изьявительное наклонение
+    Indicative,
+    /// Повелительное наклонение
+    Imperative,
 }
 
+/// Форма прилагательного
 #[derive(Debug, PartialEq)]
 pub enum Adjective {
-    Short,      //Краткое
-    Long,       //Полное
-    Possessive, //притяжательное
+    /// Краткое
+    Short,
+    /// Полное
+    Long,
+    /// Притяжательное
+    Possessive,
 }
 
+/// Степень сравнения
 #[derive(Debug, PartialEq)]
 pub enum ComparativeDegree {
-    Superlative, //превосходная
-    Comparative, //сравнительная
+    /// Превосходная
+    Superlative,
+    /// Сравнительная
+    Comparative,
 }
 
+/// Лицо глагола
 #[derive(Debug, PartialEq)]
-pub enum VerbPerson {
-    First,  //1-е лицо
-    Second, //2-е лицо
-    Third,  //3-е лицо
+pub enum Person {
+    /// 1-е лицо
+    First,
+    /// 2-е лицо
+    Second,
+    /// 3-е лицо
+    Third,
 }
 
+/// Род
 #[derive(Debug, PartialEq)]
 pub enum Gender {
-    Masculine, //мужской род
-    Feminine,  //женский род
-    Neuter,    //средний род
+    /// Мужской
+    Masculine,
+    /// Женский
+    Feminine,
+    /// Средний
+    Neuter,
 }
 
+/// Вид глагола
 #[derive(Debug, PartialEq)]
 pub enum PerfectiveAspect {
-    Perfective,   //совершенный
-    Imperfective, //несовершенный
+    /// Совершенный
+    Perfective,
+    /// Несовершенный
+    Imperfective,
 }
 
+/// Залог
 #[derive(Debug, PartialEq)]
 pub enum Voice {
-    Passive, //страдательный залог
-    Active,  //действительный залог
+    /// Страдательный залог
+    Passive,
+    /// Действительный залог
+    Active,
 }
 
+/// Одушевленность
 #[derive(Debug, PartialEq)]
 pub enum Animacy {
-    Animate,   //одушевленное
-    Inanimate, //неодушевленное
+    /// Одушевленное
+    Animate,
+    /// Неодушевленное
+    Inanimate,
 }
 
+/// Переходность глагола
 #[derive(Debug, PartialEq)]
 pub enum Transitivity {
-    Transitive,   //переходный глагол
-    Intransitive, //непереходный глагол
+    /// Переходный глагол
+    Transitive,
+    /// Непереходный глагол
+    Intransitive,
 }
 
+/// Прочие обозначения
 #[derive(Debug, PartialEq)]
 pub enum Other {
-    Parenthesis,  //вводное слово
-    Geo,          //географическое название
-    Awkward,      //образование формы затруднено
-    ProperNoun,   //имя собственное
-    Distorted,    //искаженная форма
-    CommonForm,   //общая форма мужского и женского рода
-    Obscene,      //обсценная лексика
-    Patronymic,   //отчество
-    Predicative,  //предикатив
-    Informal,     //разговорная форма
-    Rare,         //редко встречающееся слово
-    Abbreviation, //сокращение
-    Obsolete,     //устаревшая форма
-    FamilyName,   //фамилия
+    /// Вводное слово
+    Parenthesis,
+    /// Географическое название
+    Geo,
+    /// Образование формы затруднено
+    Awkward,
+    /// Имя собственное
+    ProperNoun,
+    /// Искаженная форма
+    Distorted,
+    /// Общая форма мужского и женского рода
+    CommonForm,
+    /// Обсценная лексика
+    Obscene,
+    /// Отчество
+    Patronymic,
+    /// Предикатив
+    Predicative,
+    /// Разговорная форма
+    Informal,
+    /// Редко встречающееся слово
+    Rare,
+    /// Сокращение
+    Abbreviation,
+    /// Устаревшая форма
+    Obsolete,
+    /// Фамилия
+    FamilyName,
 }
 
 impl FromStr for Fact {
