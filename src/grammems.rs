@@ -89,6 +89,7 @@ impl fmt::Display for PartOfSpeech {
     }
 }
 
+/// Контейнер для любых фактов о разобранном слове
 #[derive(Debug, PartialEq)]
 pub enum Fact {
     /// Падеж
