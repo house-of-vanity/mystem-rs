@@ -1,6 +1,6 @@
 [package]
 name = "mystem"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["AB <ab@hexor.ru>"]
 license = "WTFPL"
 edition = "2018"

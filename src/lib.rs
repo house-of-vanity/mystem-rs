@@ -108,14 +108,21 @@ impl MyStem {
             );
             self.process = MyStem::open_process()?;
         }
-        let clean_text = format!("{}{}", text.trim(), "\n");
+        let mut clean_text = text.trim().to_string();
+        for c in clean_text.clone().chars() {
+            if !char::is_alphabetic(c) && c != ' ' {
+                clean_text = clean_text.replace(c, "");
+            }
+        }
         self.process
             .stdin
             .as_ref()
             .unwrap()
             .write(clean_text.as_bytes());
+        self.process.stdin.as_ref().unwrap().write("\n".as_bytes());
         let mut contents = String::new();
-        let mut buf_reader = BufReader::new(self.process.stdout.as_ref().unwrap());
+        let mut buf_reader =
+            BufReader::with_capacity(512 * 1024, self.process.stdout.as_ref().unwrap());
         buf_reader.read_line(&mut contents);
 
         let mut stemmings: Vec<Stemming> = Vec::new();

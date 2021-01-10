@@ -23,11 +23,10 @@ fn main() -> Result<(), mystem::AppError> {
                 }
             },
             {
-                match stem.lex.len()
-                {
-                    0|1 => "".to_string(),
+                match stem.lex.len() {
+                    0 | 1 => "".to_string(),
                     x if x > 1 => format!(" Also has {} found lexems.", x),
-                    _ => unreachable!()
+                    _ => unreachable!(),
                 }
             }
         )

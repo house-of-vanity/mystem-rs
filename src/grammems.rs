@@ -10,10 +10,10 @@ use crate::Other::{
     Parenthesis, Patronymic, Predicative, ProperNoun, Rare,
 };
 use crate::PerfectiveAspect::{Imperfective, Perfective};
+use crate::Person::{First, Second, Third};
 use crate::Plurality::{Plural, Singular};
 use crate::Tense::{Inpresent, Past, Present};
 use crate::Transitivity::{Intransitive, Transitive};
-use crate::Person::{First, Second, Third};
 use crate::Voice::{Active, Passive};
 use std::fmt;
 use std::str::FromStr;
